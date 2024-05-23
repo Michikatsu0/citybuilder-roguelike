@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 public class BuilderManager : MonoBehaviour
-{
+{ 
     public static BuilderManager Instance;
     public enum SelectionTypes { Red,  Yellow, Green }
     public SelectionTypes selectionType = SelectionTypes.Yellow;
@@ -13,11 +13,13 @@ public class BuilderManager : MonoBehaviour
     public List<BaseBuilding> buildings = new List<BaseBuilding>();
     public List<SelectionBuild> buildingPrefabs = new List<SelectionBuild>();
     public SelectionBuild selectionBuild;
+    public int prefabIndex;
 
     private void Awake()
     {
         Instance = this;
     }
+
     void Start()
     {
 
@@ -33,9 +35,12 @@ public class BuilderManager : MonoBehaviour
 
     public void CreateGizmo(int prefabBuildIndex)
     {
-        if (prefabBuildIndex == 0 || prefabBuildIndex == 1)
-            prefabBuildIndex = Random.Range(0, 2);
-        var building = Instantiate(buildingPrefabs[prefabBuildIndex], BuildMousePlayer.Instance.mousePosition.transform.position, Quaternion.identity);
+        if (selectionBuild)
+            Destroy(selectionBuild.gameObject);
+        prefabIndex = prefabBuildIndex;
+        if (prefabIndex == 0 || prefabIndex == 1)
+            prefabIndex = Random.Range(0, 2);
+        var building = Instantiate(buildingPrefabs[prefabIndex], BuildMousePlayer.Instance.mousePosition.transform.position, Quaternion.identity);
         selectionBuild = building.GetComponent<SelectionBuild>();
     }
 
@@ -50,9 +55,19 @@ public class BuilderManager : MonoBehaviour
             if (cellBuilding)
             {
                 selectionBuild.transform.position = cellBuilding.transform.position;
-                if (cellBuilding.bought)
+                if (cellBuilding.bought && !cellBuilding.building)
+                {
                     selectionType = SelectionTypes.Green;
-                else 
+                    if (Input.GetMouseButton(0))
+                    {
+                        cellBuilding.building = true;
+                        Destroy(selectionBuild.gameObject);
+
+                        BaseBuilding prefabBuild = Instantiate(buildings[prefabIndex], selectionBuild.transform.position, Quaternion.identity);
+                        cellBuilding.SetBuild(prefabBuild);
+                    }
+                }
+                else
                     selectionType = SelectionTypes.Red;
             }
             else
@@ -60,6 +75,9 @@ public class BuilderManager : MonoBehaviour
         }
         else
             selectionType = SelectionTypes.Yellow;
+
+        if (Input.GetMouseButton(0)) 
+            Destroy(selectionBuild.gameObject);
     }
 
     
