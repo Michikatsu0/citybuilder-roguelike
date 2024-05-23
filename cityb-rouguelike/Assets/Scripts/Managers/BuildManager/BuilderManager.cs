@@ -20,11 +20,6 @@ public class BuilderManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (!selectionBuild) return;
@@ -35,23 +30,27 @@ public class BuilderManager : MonoBehaviour
 
     public void CreateGizmo(int prefabBuildIndex)
     {
-        if (selectionBuild)
-            Destroy(selectionBuild.gameObject);
-        prefabIndex = prefabBuildIndex;
-        if (prefabIndex == 0 || prefabIndex == 1)
-            prefabIndex = Random.Range(0, 2);
-        var building = Instantiate(buildingPrefabs[prefabIndex], BuildMousePlayer.Instance.mousePosition.transform.position, Quaternion.identity);
-        selectionBuild = building.GetComponent<SelectionBuild>();
+        if (EconomyManager.Instance.SpendMoneyCheck(buildings[prefabBuildIndex].buildingCost))
+        {
+            if (selectionBuild)
+                Destroy(selectionBuild.gameObject);
+
+            prefabIndex = prefabBuildIndex;
+            if (prefabIndex == 0 || prefabIndex == 1)
+                prefabIndex = Random.Range(0, 2);
+            var building = Instantiate(buildingPrefabs[prefabIndex], BuildMousePlayer.Instance.mousePosition.transform.position, Quaternion.identity);
+            selectionBuild = building.GetComponent<SelectionBuild>();
+        }
+
     }
 
     private void CalculateGizmo()
     {
         selectionBuild.transform.position = BuildMousePlayer.Instance.mousePosition.transform.position;
-
         if (BuildMousePlayer.Instance.GetRay(out RaycastHit hit))
         {
             CellBuilding cellBuilding = hit.collider.gameObject.GetComponent<CellBuilding>();
-            
+
             if (cellBuilding)
             {
                 selectionBuild.transform.position = cellBuilding.transform.position;
@@ -61,10 +60,21 @@ public class BuilderManager : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         cellBuilding.building = true;
-                        Destroy(selectionBuild.gameObject);
+                        selectionBuild?.gameObject.SetActive(false);
 
-                        BaseBuilding prefabBuild = Instantiate(buildings[prefabIndex], selectionBuild.transform.position, Quaternion.identity);
-                        cellBuilding.SetBuild(prefabBuild);
+
+                        if (EconomyManager.Instance.SpendMoneyCheck(buildings[prefabIndex].buildingCost))
+                        {
+                            StartCoroutine(EconomyManager.Instance.AnimateMoneyDecrease(buildings[prefabIndex].buildingCost));
+                            BaseBuilding prefabBuild = Instantiate(buildings[prefabIndex], selectionBuild.transform.position, Quaternion.identity);
+                            cellBuilding.SetBuild(prefabBuild);
+                        }
+                        else
+                        {
+
+                        }
+
+                        StartCoroutine(DelayDestroy());
                     }
                 }
                 else
@@ -76,9 +86,19 @@ public class BuilderManager : MonoBehaviour
         else
             selectionType = SelectionTypes.Yellow;
 
-        if (Input.GetMouseButton(0)) 
-            Destroy(selectionBuild.gameObject);
+        if (Input.GetMouseButton(0))
+        {
+            selectionBuild?.gameObject.SetActive(false);
+            StartCoroutine(DelayDestroy());
+        }
     }
 
-    
+
+    private IEnumerator DelayDestroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        // Check if selectionBuild is not null and its gameObject is not destroyed
+        if (selectionBuild != null && selectionBuild.gameObject != null)
+            Destroy(selectionBuild.gameObject);
+    }
 }

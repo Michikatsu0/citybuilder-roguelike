@@ -32,8 +32,16 @@ public class BuildMousePlayer : MonoBehaviour
                 if (BuilderManager.Instance.selectionBuild) return;
                 if (Input.GetMouseButton(0) && !cellBuilding.bought) // buy
                 {
-                    cellBuilding.bought = true;
-                    cellBuilding.StartFade();
+                    if (EconomyManager.Instance.SpendMoneyCheck(cellBuilding.priceSlot))
+                    {
+                        StartCoroutine(EconomyManager.Instance.AnimateMoneyDecrease(cellBuilding.priceSlot));
+                        cellBuilding.bought = true;
+                        cellBuilding.StartFade();
+                    }
+                    else 
+                    { 
+
+                    }
                 }
                 if (gizmoActivated && Input.GetMouseButton(0) && !cellBuilding.building) //build
                 {

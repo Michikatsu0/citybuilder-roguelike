@@ -7,6 +7,7 @@ public class UITriggerBuildUI : MonoBehaviour
     public Animator animator;
     private int hashEnable = Animator.StringToHash("Enable");
     public LayerMask desiredLayer;
+
     void Start()
     {
         
@@ -16,6 +17,7 @@ public class UITriggerBuildUI : MonoBehaviour
     {
         
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (((1 << other.gameObject.layer) & desiredLayer) != 0)

@@ -15,13 +15,13 @@ public class CellBuilding : MonoBehaviour
     public Vector3 position;
     public Slider buildProgress;
     public Material[] materials;
-
+    public BaseBuilding currentBuilding;
     public List<Image> imagesFade = new List<Image>();
     public List<TMP_Text> textsFade = new List<TMP_Text>();
     public AnimationCurve animationFadeCurve, animationFadeCurve1;
 
     private MeshRenderer meshRendererCell;
-    private BaseBuilding currentBuilding;
+    
     private float timer;
     private bool isFading = false;
 
@@ -29,7 +29,7 @@ public class CellBuilding : MonoBehaviour
     {
         position = transform.position;
         meshRendererCell = GetComponent<MeshRenderer>();
-        BoughtManager();
+        FadeUIManager();
         StartFade();
     }
 
@@ -41,12 +41,15 @@ public class CellBuilding : MonoBehaviour
 
     void Update()
     {
-        BoughtManager();
+        FadeUIManager();
     }
 
-    public void BoughtManager()
+    public void FadeUIManager()
     {
         if (BuilderManager.Instance.selectionBuild) return;
+
+        textsFade[0].text = priceSlot.ToString();
+
         if (bought)
         {
             meshRendererCell.material = materials[0];
@@ -65,7 +68,6 @@ public class CellBuilding : MonoBehaviour
         else
         {
             meshRendererCell.material = materials[1];
-            textsFade[0].text = priceSlot.ToString();
 
             if (isFading)
             {
