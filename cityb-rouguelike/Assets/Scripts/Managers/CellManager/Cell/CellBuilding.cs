@@ -10,18 +10,18 @@ public class CellBuilding : MonoBehaviour
 {
     public ParticleSystem effect;
     public float timeDuration, curveValue, fadeValue;
-    public bool building = false, bought = false;
+    public bool building = false, bought = false, recollect = false, doOnce = true;
     public int priceSlot = 2000;
     public Vector3 position;
     public Slider buildProgress;
     public Material[] materials;
-
+    public BaseBuilding currentBuilding;
     public List<Image> imagesFade = new List<Image>();
     public List<TMP_Text> textsFade = new List<TMP_Text>();
     public AnimationCurve animationFadeCurve, animationFadeCurve1;
 
     private MeshRenderer meshRendererCell;
-    private BaseBuilding currentBuilding;
+    
     private float timer;
     private bool isFading = false;
 
@@ -29,7 +29,7 @@ public class CellBuilding : MonoBehaviour
     {
         position = transform.position;
         meshRendererCell = GetComponent<MeshRenderer>();
-        BoughtManager();
+        FadeUIManager();
         StartFade();
     }
 
@@ -41,40 +41,71 @@ public class CellBuilding : MonoBehaviour
 
     void Update()
     {
-        BoughtManager();
+        FadeUIManager();
     }
 
-    public void BoughtManager()
+    public void FadeUIManager()
     {
         if (BuilderManager.Instance.selectionBuild) return;
+
+        textsFade[0].text = priceSlot.ToString();
+
         if (bought)
         {
             meshRendererCell.material = materials[0];
             //apagar text valor e imagen
             if (isFading)
             {
-                Fade(animationFadeCurve, out float curveValue);
-                ApplyAlphaFadeImage(curveValue, 0);
-                ApplyAlphaFadeText(curveValue, 0);
-                ApplyAlphaFadeImage(curveValue, 4);
+               
+                
+                if (!recollect && doOnce)
+                {
+                    Fade(animationFadeCurve, out float curveValue1);
+                    ApplyAlphaFadeImage(curveValue1, 5);
+                    ApplyAlphaFadeImage(curveValue1, 6);
+                    ApplyAlphaFadeText(curveValue1, 3);
+
+                }
+                if (!recollect)
+                {
+
+                    Fade(animationFadeCurve, out float curveValue);
+                    ApplyAlphaFadeImage(curveValue, 0);
+                    ApplyAlphaFadeText(curveValue, 0);
+                    ApplyAlphaFadeImage(curveValue, 4);
+
+                }
             }
+            
 
             ApplyAlphaFadeImage(curveValue, 1);
             ApplyAlphaFadeText(curveValue, 1);
+
+            if (recollect)
+            {
+                ApplyAlphaFadeImage(curveValue, 5);
+                ApplyAlphaFadeImage(curveValue, 6);
+                ApplyAlphaFadeText(curveValue, 3);
+            }
+
         }
         else
         {
             meshRendererCell.material = materials[1];
-            textsFade[0].text = priceSlot.ToString();
 
             if (isFading)
             {
                 Fade(animationFadeCurve1, out float curveValue1);
                 ApplyAlphaFadeImage(curveValue1, 0);
                 ApplyAlphaFadeText(curveValue1, 0);
+                ApplyAlphaFadeImage(curveValue1, 5);
+                ApplyAlphaFadeImage(curveValue1, 6);
+                ApplyAlphaFadeText(curveValue1, 3);
+
                 Fade(animationFadeCurve, out float curveValue);
                 ApplyAlphaFadeImage(curveValue, 1);
                 ApplyAlphaFadeText(curveValue, 1);
+                
                 //ApplyAlphaFadeImage(curveValue, 4);
             }
 
@@ -91,7 +122,11 @@ public class CellBuilding : MonoBehaviour
         curveValue = animationCurve.Evaluate(timeDuration * t);
 
         if (timer >= 1f / timeDuration)
+        {
+
             isFading = false;
+            doOnce = false;
+        }
     } 
 
     public void ApplyAlphaFadeImage(float alphaValue, int index)
@@ -110,8 +145,10 @@ public class CellBuilding : MonoBehaviour
 
     public void SetBuild(BaseBuilding buildPosition)
     {
-        if (bought) return;
+        //if (bought) return;
         buildPosition.gameObject.transform.position = position;
+        currentBuilding = buildPosition;
+        currentBuilding.cellBuilding = this;
         building = true;
     }
 

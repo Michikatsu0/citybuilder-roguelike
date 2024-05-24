@@ -19,8 +19,17 @@ public class CellBuildingsManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 2; i++)
-            cells[Random.Range(1, 5)].bought = true;
+        int cellsBought = 0;
+
+        while (cellsBought < 2)
+        {
+            int randomIndex = Random.Range(1, 5);
+            if (!cells[randomIndex].bought)
+            {
+                cells[randomIndex].bought = true;
+                cellsBought++;
+            }
+        }
     }
 
     private void Update()
