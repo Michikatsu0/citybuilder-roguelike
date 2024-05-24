@@ -65,7 +65,7 @@ public class BuilderManager : MonoBehaviour
 
                         if (EconomyManager.Instance.SpendMoneyCheck(buildings[prefabIndex].buildingCost))
                         {
-                            StartCoroutine(EconomyManager.Instance.AnimateMoneyDecrease(buildings[prefabIndex].buildingCost));
+                            StartCoroutine(EconomyManager.Instance.AnimateMoney(false, buildings[prefabIndex].buildingCost));
                             BaseBuilding prefabBuild = Instantiate(buildings[prefabIndex], selectionBuild.transform.position, Quaternion.identity);
                             cellBuilding.SetBuild(prefabBuild);
                         }

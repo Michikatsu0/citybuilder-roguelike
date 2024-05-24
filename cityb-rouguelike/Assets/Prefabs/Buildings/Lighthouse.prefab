@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2995700238778294028}
+  - component: {fileID: -3636564388262965420}
   - component: {fileID: 1870460967750317203}
   m_Layer: 0
   m_Name: Lighthouse
@@ -33,6 +34,27 @@ Transform:
   - {fileID: 1399712746411982595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &-3636564388262965420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6796445712830606438}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 50, y: 30, z: 50}
+  m_Center: {x: 0, y: 15, z: 0}
 --- !u!114 &1870460967750317203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,8 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
-  moneyGeneratedPerMinute: 0
+  moneyGeneratedPerMinute: 2000
   buildingCost: 1000
+  cellBuilding: {fileID: 0}
 --- !u!1001 &1506029864988547304
 PrefabInstance:
   m_ObjectHideFlags: 0

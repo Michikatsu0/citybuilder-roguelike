@@ -54,22 +54,27 @@ MonoBehaviour:
   fadeValue: 0
   building: 0
   bought: 1
+  recollect: 0
   priceSlot: 0
   position: {x: 0, y: 0, z: 0}
   buildProgress: {fileID: 5441240920996623481}
   materials:
   - {fileID: 2100000, guid: 6fdd3d1d4c4dd774aabd213313a63ed2, type: 2}
   - {fileID: 2100000, guid: 400c9e2b4c2337e4d8b77d5d5bed56b9, type: 2}
+  currentBuilding: {fileID: 0}
   imagesFade:
   - {fileID: 6026112399735220072}
   - {fileID: 5842868917864275820}
   - {fileID: 801931004282843531}
   - {fileID: 7407593591128121759}
   - {fileID: 7621920057980131939}
+  - {fileID: 1592573241685547026}
+  - {fileID: 2970773017427554382}
   textsFade:
   - {fileID: 1173439078849382803}
   - {fileID: 7423458758279472693}
   - {fileID: 5908523941365676550}
+  - {fileID: 4193151299431162610}
   animationFadeCurve:
     serializedVersion: 2
     m_Curve:
@@ -197,6 +202,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1172598959741759618}
     m_Modifications:
+    - target: {fileID: 1820773958359729858, guid: 202478118697bcf408b8e224498db89f, type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476684041608485233, guid: 202478118697bcf408b8e224498db89f, type: 3}
+      propertyPath: m_Name
+      value: Generate_Money_Text (TMP)
+      objectReference: {fileID: 0}
     - target: {fileID: 7566882412230244770, guid: 202478118697bcf408b8e224498db89f, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -281,6 +294,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9080260612244471908, guid: 202478118697bcf408b8e224498db89f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 310.4
+      objectReference: {fileID: 0}
     - target: {fileID: 9138770611142017449, guid: 202478118697bcf408b8e224498db89f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -304,6 +321,39 @@ MonoBehaviour:
 --- !u!114 &1173439078849382803 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3692182067782528419, guid: 202478118697bcf408b8e224498db89f, type: 3}
+  m_PrefabInstance: {fileID: 2555125004071052336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1592573241685547026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3849544465767873570, guid: 202478118697bcf408b8e224498db89f, type: 3}
+  m_PrefabInstance: {fileID: 2555125004071052336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2970773017427554382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 743075206490887294, guid: 202478118697bcf408b8e224498db89f, type: 3}
+  m_PrefabInstance: {fileID: 2555125004071052336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4193151299431162610 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1820773958359729858, guid: 202478118697bcf408b8e224498db89f, type: 3}
   m_PrefabInstance: {fileID: 2555125004071052336}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

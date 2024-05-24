@@ -154,5 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
-  moneyGeneratedPerMinute: 0
-  buildCost: 1000
+  moneyGeneratedPerMinute: 2000
+  buildingCost: 1000
+  canRecollect: 0
+  cellBuilding: {fileID: 0}

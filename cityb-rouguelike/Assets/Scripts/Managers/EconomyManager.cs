@@ -12,6 +12,8 @@ public class EconomyManager : MonoBehaviour
     public TMP_Text moneyText;
     public Animator animator;
     public int hashAnimDenegated = Animator.StringToHash("Denegate");
+    private int targetAmount;
+
     private void Awake()
     {
         Instance = this;
@@ -22,7 +24,6 @@ public class EconomyManager : MonoBehaviour
         moneyText.text = currentAmountMoney.ToString();     
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -39,12 +40,29 @@ public class EconomyManager : MonoBehaviour
         }
     }
 
-    public IEnumerator AnimateMoneyDecrease(int amount)
+    public void AddMoney(int amount)
+    {
+        StartCoroutine(AnimateMoney(true, amount));
+    }
+
+
+    public IEnumerator AnimateMoney(bool increase, int amount)
     {
         int initialAmount = currentAmountMoney;
-        int targetAmount = currentAmountMoney - amount;
+        
         float elapsedTime = 0f;
-        currentAmountMoney = targetAmount;
+
+        if (!increase)
+        {
+            targetAmount = currentAmountMoney - amount;
+            currentAmountMoney = targetAmount;
+        }
+        else
+        {
+            targetAmount = currentAmountMoney + amount;
+            currentAmountMoney = initialAmount;
+        }
+
         while (elapsedTime < animationDuration)
         {
             elapsedTime += Time.deltaTime;

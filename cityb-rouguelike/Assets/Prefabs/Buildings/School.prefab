@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4091692974007330745}
   - component: {fileID: 3722773055562917035}
   - component: {fileID: 1969594478638041370}
+  - component: {fileID: 8235677960273603546}
   m_Layer: 0
   m_Name: School
   m_TagString: Untagged
@@ -68,8 +69,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
-  moneyGeneratedPerMinute: 0
-  buildCost: 1000
+  moneyGeneratedPerMinute: 2000
+  buildingCost: 1000
+  cellBuilding: {fileID: 0}
+--- !u!114 &8235677960273603546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175411170433466370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d35caae8ac365464cbf69340d3140fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6874195105661492601
 GameObject:
   m_ObjectHideFlags: 0

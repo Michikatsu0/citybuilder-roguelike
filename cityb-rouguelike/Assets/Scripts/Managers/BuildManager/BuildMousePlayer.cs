@@ -6,7 +6,6 @@ public class BuildMousePlayer : MonoBehaviour
 {
     public static BuildMousePlayer Instance; 
     public LayerMask layerMask;
-    public bool gizmoActivated;
     public GameObject mousePosition;
     private RaycastHit hit;
 
@@ -14,6 +13,7 @@ public class BuildMousePlayer : MonoBehaviour
     {
         Instance = this;
     }
+
     void Start()
     {
         
@@ -30,26 +30,22 @@ public class BuildMousePlayer : MonoBehaviour
             if (cellBuilding)
             {
                 if (BuilderManager.Instance.selectionBuild) return;
-                if (Input.GetMouseButton(0) && !cellBuilding.bought) // buy
+                if (Input.GetMouseButton(0) && !cellBuilding.bought && !cellBuilding.building && !cellBuilding.recollect) // buy
                 {
                     if (EconomyManager.Instance.SpendMoneyCheck(cellBuilding.priceSlot))
                     {
-                        StartCoroutine(EconomyManager.Instance.AnimateMoneyDecrease(cellBuilding.priceSlot));
+                        StartCoroutine(EconomyManager.Instance.AnimateMoney(false, cellBuilding.priceSlot));
                         cellBuilding.bought = true;
                         cellBuilding.StartFade();
                     }
-                    else 
-                    { 
-
+                }
+                else if (Input.GetMouseButtonDown(0) && cellBuilding.bought && cellBuilding.building && cellBuilding.recollect)
+                {
+                    if (cellBuilding.currentBuilding.CanCollectMoney())
+                    {
+                        EconomyManager.Instance.AddMoney(cellBuilding.currentBuilding.CollectMoney());
+                        cellBuilding.recollect = false; // Reset recollection state
                     }
-                }
-                if (gizmoActivated && Input.GetMouseButton(0) && !cellBuilding.building) //build
-                {
-                    
-                }
-                else if (Input.GetMouseButton(0) && cellBuilding.building)
-                {
-
                 }
             }
         }
