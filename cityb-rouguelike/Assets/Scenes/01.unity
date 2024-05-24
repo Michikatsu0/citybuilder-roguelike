@@ -4696,7 +4696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationDuration: 1
-  currentAmountMoney: 100000
+  currentAmountMoney: 2000
   moneyText: {fileID: 179191137}
   animator: {fileID: 772795159}
   hashAnimDenegated: -348610141
