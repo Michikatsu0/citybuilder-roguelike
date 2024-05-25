@@ -57,7 +57,7 @@ public class BaseBuilding : MonoBehaviour
         isGeneratingMoney = true; // Restart generation after collection
         cellBuilding.doOnce = true;
 
-        cellBuilding.StartFade();
+        //cellBuilding.StartFade();
         StartCoroutine(GenerateMoney()); // Reiniciamos la generación de dinero
         return moneyToCollect;
     }
@@ -65,5 +65,10 @@ public class BaseBuilding : MonoBehaviour
     public int GetGeneratedMoney()
     {
         return (int)generatedMoney;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        healthPoints -= damage;
     }
 }

@@ -56,7 +56,6 @@ public class CellBuilding : MonoBehaviour
             //apagar text valor e imagen
             if (isFading)
             {
-               
                 
                 if (!recollect && doOnce)
                 {
@@ -68,15 +67,12 @@ public class CellBuilding : MonoBehaviour
                 }
                 if (!recollect)
                 {
-
                     Fade(animationFadeCurve, out float curveValue);
                     ApplyAlphaFadeImage(curveValue, 0);
                     ApplyAlphaFadeText(curveValue, 0);
                     ApplyAlphaFadeImage(curveValue, 4);
-
                 }
             }
-            
 
             ApplyAlphaFadeImage(curveValue, 1);
             ApplyAlphaFadeText(curveValue, 1);
@@ -87,7 +83,6 @@ public class CellBuilding : MonoBehaviour
                 ApplyAlphaFadeImage(curveValue, 6);
                 ApplyAlphaFadeText(curveValue, 3);
             }
-
         }
         else
         {
@@ -105,8 +100,6 @@ public class CellBuilding : MonoBehaviour
                 Fade(animationFadeCurve, out float curveValue);
                 ApplyAlphaFadeImage(curveValue, 1);
                 ApplyAlphaFadeText(curveValue, 1);
-                
-                //ApplyAlphaFadeImage(curveValue, 4);
             }
 
             ApplyAlphaFadeImage(curveValue, 0);
@@ -123,7 +116,6 @@ public class CellBuilding : MonoBehaviour
 
         if (timer >= 1f / timeDuration)
         {
-
             isFading = false;
             doOnce = false;
         }
@@ -148,6 +140,7 @@ public class CellBuilding : MonoBehaviour
         //if (bought) return;
         buildPosition.gameObject.transform.position = position;
         currentBuilding = buildPosition;
+        textsFade[1].text = currentBuilding.healthPoints.ToString();
         currentBuilding.cellBuilding = this;
         building = true;
     }

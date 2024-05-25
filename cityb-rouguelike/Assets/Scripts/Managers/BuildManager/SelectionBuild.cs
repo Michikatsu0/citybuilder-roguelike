@@ -6,12 +6,11 @@ using UnityEngine.UIElements;
 public class SelectionBuild : MonoBehaviour
 {
     public List<MeshRenderer> renderers = new List<MeshRenderer>();
-    public List<Material[]> materials = new List<Material[]>();
-
+    public List<Material[]> renderMaterials = new List<Material[]>();
     void Start()
     {
         foreach (var renderer in renderers)
-            materials.Add(renderer.materials);
+            renderMaterials.Add(renderer.materials);
     }
 
     public void SetState(SelectionBuild selectionBuild)
@@ -34,13 +33,12 @@ public class SelectionBuild : MonoBehaviour
     {
         foreach (var renderer in renderers)
         {
-            foreach (var mats in materials)
-            {
-                for (var i = 0; i < mats.Length; i++)
-                    mats[i] = selectMaterial;
-
-                renderer.materials = mats;
-            }
+            var mats = renderer.materials;
+            for (var i = 0; i < mats.Length; i++)
+                mats[i] = selectMaterial; // Cambiamos el material sin modificar la cantidad original           
+            renderer.materials = mats; // Asignamos la lista completa de materiales modificados
         }
     }
+
+
 }

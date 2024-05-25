@@ -69,10 +69,6 @@ public class BuilderManager : MonoBehaviour
                             BaseBuilding prefabBuild = Instantiate(buildings[prefabIndex], selectionBuild.transform.position, Quaternion.identity);
                             cellBuilding.SetBuild(prefabBuild);
                         }
-                        else
-                        {
-
-                        }
 
                         StartCoroutine(DelayDestroy());
                     }

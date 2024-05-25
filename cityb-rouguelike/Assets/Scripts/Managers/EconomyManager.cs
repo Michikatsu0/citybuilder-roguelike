@@ -13,6 +13,7 @@ public class EconomyManager : MonoBehaviour
     public Animator animator;
     public int hashAnimDenegated = Animator.StringToHash("Denegate");
     private int targetAmount;
+    private bool isAnimating = false;
 
     private void Awake()
     {
@@ -45,23 +46,20 @@ public class EconomyManager : MonoBehaviour
         StartCoroutine(AnimateMoney(true, amount));
     }
 
-
     public IEnumerator AnimateMoney(bool increase, int amount)
     {
+        if (isAnimating)
+        {
+            targetAmount += (increase) ? amount : -amount;
+            yield break;
+        }
+
+        isAnimating = true;
         int initialAmount = currentAmountMoney;
-        
+        targetAmount = (increase) ? currentAmountMoney + amount : currentAmountMoney - amount;
         float elapsedTime = 0f;
 
-        if (!increase)
-        {
-            targetAmount = currentAmountMoney - amount;
-            currentAmountMoney = targetAmount;
-        }
-        else
-        {
-            targetAmount = currentAmountMoney + amount;
-            currentAmountMoney = initialAmount;
-        }
+        currentAmountMoney = targetAmount;
 
         while (elapsedTime < animationDuration)
         {
@@ -73,8 +71,9 @@ public class EconomyManager : MonoBehaviour
         }
 
         // Asegurarse de que el valor final sea exacto
-        currentAmountMoney = targetAmount;
+        
         moneyText.text = currentAmountMoney.ToString();
+        isAnimating = false;
     }
 
 }
