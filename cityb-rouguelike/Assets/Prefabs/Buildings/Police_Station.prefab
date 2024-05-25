@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7370249822089738558}
   - component: {fileID: 8019940951177696914}
   - component: {fileID: 2304290229069325193}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PoliceStation (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,8 @@ GameObject:
   - component: {fileID: 7845783194517804186}
   - component: {fileID: 511664694528158895}
   - component: {fileID: 2987902921408630856}
-  m_Layer: 0
+  - component: {fileID: 5528724980342223762}
+  m_Layer: 8
   m_Name: Police_Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +136,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -156,5 +157,31 @@ MonoBehaviour:
   healthPoints: 100
   moneyGeneratedPerMinute: 2000
   buildingCost: 1000
-  canRecollect: 0
   cellBuilding: {fileID: 0}
+--- !u!54 &5528724980342223762
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552314558774734323}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

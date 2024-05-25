@@ -23,19 +23,26 @@ public class CellBuilding : MonoBehaviour
     private MeshRenderer meshRendererCell;
     
     private float timer;
-    private bool isFading = false;
+    private bool isFading = false, isFadingOut = false;
 
     void Start()
     {
         position = transform.position;
         meshRendererCell = GetComponent<MeshRenderer>();
         FadeUIManager();
-        StartFade();
+        StartFade(); 
+        StartFadeOut();
     }
 
     public void StartFade()
     {
         isFading = true;
+        timer = 0f;
+    }
+
+    public void StartFadeOut()
+    {
+        isFadingOut = true;
         timer = 0f;
     }
 
@@ -56,21 +63,20 @@ public class CellBuilding : MonoBehaviour
             //apagar text valor e imagen
             if (isFading)
             {
-                
+                Fade(animationFadeCurve, out float curveValue);
+                ApplyAlphaFadeImage(curveValue, 0);
+                ApplyAlphaFadeText(curveValue, 0);
+                ApplyAlphaFadeImage(curveValue, 4);
+            }
+
+            if (isFadingOut)
+            {
                 if (!recollect && doOnce)
                 {
                     Fade(animationFadeCurve, out float curveValue1);
                     ApplyAlphaFadeImage(curveValue1, 5);
                     ApplyAlphaFadeImage(curveValue1, 6);
                     ApplyAlphaFadeText(curveValue1, 3);
-
-                }
-                if (!recollect)
-                {
-                    Fade(animationFadeCurve, out float curveValue);
-                    ApplyAlphaFadeImage(curveValue, 0);
-                    ApplyAlphaFadeText(curveValue, 0);
-                    ApplyAlphaFadeImage(curveValue, 4);
                 }
             }
 

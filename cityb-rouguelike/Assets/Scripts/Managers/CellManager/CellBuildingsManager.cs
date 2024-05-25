@@ -30,6 +30,9 @@ public class CellBuildingsManager : MonoBehaviour
                 cellsBought++;
             }
         }
+
+        BaseBuilding baseBuilding = Instantiate(BuilderManager.Instance.buildings[6], cells[0].position, Quaternion.identity);
+        cells[0].SetBuild(baseBuilding);
     }
 
     private void Update()

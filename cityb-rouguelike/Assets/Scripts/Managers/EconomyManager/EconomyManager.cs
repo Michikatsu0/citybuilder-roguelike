@@ -57,9 +57,7 @@ public class EconomyManager : MonoBehaviour
         isAnimating = true;
         int initialAmount = currentAmountMoney;
         targetAmount = (increase) ? currentAmountMoney + amount : currentAmountMoney - amount;
-        float elapsedTime = 0f;
-
-        currentAmountMoney = targetAmount;
+        float elapsedTime = 0f;     
 
         while (elapsedTime < animationDuration)
         {
@@ -71,7 +69,7 @@ public class EconomyManager : MonoBehaviour
         }
 
         // Asegurarse de que el valor final sea exacto
-        
+        currentAmountMoney = targetAmount;
         moneyText.text = currentAmountMoney.ToString();
         isAnimating = false;
     }

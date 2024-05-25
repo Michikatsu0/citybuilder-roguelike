@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3722773055562917035}
   - component: {fileID: 1969594478638041370}
   - component: {fileID: 8235677960273603546}
-  m_Layer: 0
+  - component: {fileID: -559111957433123181}
+  m_Layer: 8
   m_Name: School
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +51,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -84,6 +85,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35caae8ac365464cbf69340d3140fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  limit: 2000
+  isGeneratingMoney: 1
+--- !u!54 &-559111957433123181
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175411170433466370}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6874195105661492601
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +125,7 @@ GameObject:
   - component: {fileID: 8210767895189845645}
   - component: {fileID: 149138863064729967}
   - component: {fileID: 2176806827274228627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: School (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

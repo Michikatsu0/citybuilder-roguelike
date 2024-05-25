@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5601904057311889290}
   - component: {fileID: 73179189759531788}
   - component: {fileID: 8700606894971441685}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: House2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1366675425555976444}
   - component: {fileID: 6036609511524387903}
   - component: {fileID: 2862427812251079702}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: House1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,8 @@ GameObject:
   - component: {fileID: 5289828398660697561}
   - component: {fileID: 2542704780165136724}
   - component: {fileID: 9203504905481720043}
-  m_Layer: 0
+  - component: {fileID: -1153946843915757392}
+  m_Layer: 8
   m_Name: House_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +229,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -249,5 +250,31 @@ MonoBehaviour:
   healthPoints: 100
   moneyGeneratedPerMinute: 2000
   buildingCost: 1000
-  canRecollect: 0
   cellBuilding: {fileID: 0}
+--- !u!54 &-1153946843915757392
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9163148584458234679}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

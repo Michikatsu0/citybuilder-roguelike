@@ -6,17 +6,19 @@ public class BaseBuilding : MonoBehaviour
     public int healthPoints = 100;
     public int moneyGeneratedPerMinute = 1000;
     public int buildingCost = 1000;
-    
+
     private float generatedMoney = 0;
     private bool isGeneratingMoney = true;
     private int threshold = 200; // Example threshold for collection
     private float moneyPerSecond;
     public CellBuilding cellBuilding;
 
+    private Coroutine generateMoneyCoroutine;
+
     void Start()
     {
         moneyPerSecond = moneyGeneratedPerMinute / 60f; // Corrigiendo el cálculo del dinero por segundo
-        StartCoroutine(GenerateMoney());
+        generateMoneyCoroutine = StartCoroutine(GenerateMoney());
     }
 
     void Update()
@@ -37,10 +39,7 @@ public class BaseBuilding : MonoBehaviour
                 int tempMoney = (int)generatedMoney;
                 cellBuilding.textsFade[3].text = tempMoney.ToString();
             }
-            else
-                isGeneratingMoney = false;
-
-            yield return null;
+            yield return null; // Esperar un frame antes de continuar el bucle
         }
     }
 
@@ -54,11 +53,14 @@ public class BaseBuilding : MonoBehaviour
         Debug.Log("holactemoneda");
         int moneyToCollect = (int)generatedMoney;
         generatedMoney = 0;
-        isGeneratingMoney = true; // Restart generation after collection
+        isGeneratingMoney = true; // Reiniciar la generación después de la recolección
         cellBuilding.doOnce = true;
+        cellBuilding.StartFadeOut();
 
-        //cellBuilding.StartFade();
-        StartCoroutine(GenerateMoney()); // Reiniciamos la generación de dinero
+        if (generateMoneyCoroutine != null)
+            StopCoroutine(generateMoneyCoroutine);
+
+        generateMoneyCoroutine = StartCoroutine(GenerateMoney()); // Reiniciar la generación de dinero
         return moneyToCollect;
     }
 
