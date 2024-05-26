@@ -2,21 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerDamage : MonoBehaviour
+public class TriggerDamageHitbox : MonoBehaviour
 {
     public LayerMask desiredLayer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    public BaseChaos baseChaos;
     private void OnTriggerEnter(Collider other)
     {
         GameObject target = other.gameObject;
@@ -26,6 +15,7 @@ public class TriggerDamage : MonoBehaviour
             if (build)
             {
                 Debug.Log("Damage");
+                build.TakeDamage(baseChaos.damage);
             }
         }
     }

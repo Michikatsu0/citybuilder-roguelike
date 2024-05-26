@@ -25,11 +25,6 @@ public class EconomyManager : MonoBehaviour
         moneyText.text = currentAmountMoney.ToString();     
     }
 
-    void Update()
-    {
-        
-    }
-
     public bool SpendMoneyCheck(int amount)
     {
         if (currentAmountMoney >= amount)
@@ -64,13 +59,20 @@ public class EconomyManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / animationDuration;
             int currentDisplayAmount = (int)Mathf.Lerp(initialAmount, targetAmount, t);
-            moneyText.text = currentDisplayAmount.ToString();
+            currentAmountMoney = currentDisplayAmount;
+            if (currentAmountMoney <= 0)
+                moneyText.text = 0.ToString();
+            else
+                moneyText.text = currentAmountMoney.ToString();
             yield return null;
         }
 
         // Asegurarse de que el valor final sea exacto
         currentAmountMoney = targetAmount;
-        moneyText.text = currentAmountMoney.ToString();
+        if (currentAmountMoney <= 0)
+            moneyText.text = 0.ToString();
+        else
+            moneyText.text = currentAmountMoney.ToString();
         isAnimating = false;
     }
 

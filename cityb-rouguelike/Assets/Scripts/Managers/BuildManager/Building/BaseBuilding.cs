@@ -14,9 +14,11 @@ public class BaseBuilding : MonoBehaviour
     public CellBuilding cellBuilding;
 
     private Coroutine generateMoneyCoroutine;
+    private MeshRenderer[] meshRenderer;
 
     void Start()
     {
+        meshRenderer = GetComponentsInChildren<MeshRenderer>();
         moneyPerSecond = moneyGeneratedPerMinute / 60f; // Corrigiendo el cálculo del dinero por segundo
         generateMoneyCoroutine = StartCoroutine(GenerateMoney());
     }
@@ -72,5 +74,10 @@ public class BaseBuilding : MonoBehaviour
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
+        if (healthPoints <= 0)
+        {
+            healthPoints = 0;
+            cellBuilding.DestroyBuild(meshRenderer, this);
+        }
     }
 }

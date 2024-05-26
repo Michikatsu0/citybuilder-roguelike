@@ -151,21 +151,35 @@ public class CellBuilding : MonoBehaviour
         building = true;
     }
 
-    public void DestroyBuild(BaseBuilding buildPosition)
+    public void DestroyBuild(MeshRenderer[] meshRenderer, BaseBuilding buildPosition)
     {
-        StartCoroutine(DestroyEffect(buildPosition));
+        StartCoroutine(DestroyEffect(meshRenderer, buildPosition));
     }
 
-    private IEnumerator DestroyEffect(BaseBuilding buildPosition)
+    private IEnumerator DestroyEffect(MeshRenderer[] meshRenderer, BaseBuilding buildPosition)
     {
         bought = false;
         // Effect
+        EnableMeshRederer(meshRenderer, false);
         yield return new WaitForSeconds(1f);
+        EnableMeshRederer(meshRenderer, true);
         yield return new WaitForSeconds(1f);
+        EnableMeshRederer(meshRenderer, false);
         yield return new WaitForSeconds(1f);
+        EnableMeshRederer(meshRenderer, true);
         yield return new WaitForSeconds(0.5f);
+        EnableMeshRederer(meshRenderer, false);
         yield return new WaitForSeconds(0.5f);
+        EnableMeshRederer(meshRenderer, true);
         yield return new WaitForSeconds(0.5f);
+        EnableMeshRederer(meshRenderer, false);
         Destroy(buildPosition.gameObject);
+    }
+
+
+    private void EnableMeshRederer(MeshRenderer[] meshRenderer, bool enable)
+    {
+        foreach (var mr in meshRenderer)
+            mr.enabled = enable;
     }
 }

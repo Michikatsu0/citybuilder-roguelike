@@ -52,4 +52,14 @@ public class CellBuildingsManager : MonoBehaviour
             }
         }
     }
+
+    public bool AreAllBuildingsDestroyed()
+    {
+        foreach (var cell in cells)
+        {
+            if (cell.currentBuilding.healthPoints > 0)
+                return false;
+        }
+        return true;
+    }
 }

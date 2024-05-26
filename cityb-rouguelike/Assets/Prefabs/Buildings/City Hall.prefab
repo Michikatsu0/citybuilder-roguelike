@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 100
-  moneyGeneratedPerMinute: 2000
-  buildingCost: 1000
+  moneyGeneratedPerMinute: 100000
+  buildingCost: 150000
   cellBuilding: {fileID: 0}
 --- !u!54 &1022114426711757700
 Rigidbody:

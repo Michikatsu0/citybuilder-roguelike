@@ -55,6 +55,7 @@ MonoBehaviour:
   building: 0
   bought: 1
   recollect: 0
+  doOnce: 1
   priceSlot: 0
   position: {x: 0, y: 0, z: 0}
   buildProgress: {fileID: 5441240920996623481}
@@ -213,6 +214,10 @@ PrefabInstance:
     - target: {fileID: 7566882412230244770, guid: 202478118697bcf408b8e224498db89f, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566882412230244770, guid: 202478118697bcf408b8e224498db89f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8483649624529038131, guid: 202478118697bcf408b8e224498db89f, type: 3}
       propertyPath: m_Pivot.x
