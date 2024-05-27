@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59051712252398a459bfb419da0efc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
+  healthPoints: 200
   moneyGeneratedPerMinute: 5000
   buildingCost: 10000
   cellBuilding: {fileID: 0}

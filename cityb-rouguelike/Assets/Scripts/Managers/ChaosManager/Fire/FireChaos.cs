@@ -1,70 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FireChaos : MonoBehaviour
+public class FireChaos : BaseChaos
 {
-    public Transform center;
-
-    public float initialRadius = 0f;
-    public float maxRadius = 5f;
-    public float expansionDuration = 5f; // Duration in seconds for the fire to reach max radius
-    public float contractionDuration = 5f; // Duration in seconds for the fire to shrink to zero
-
-    public SphereCollider sphereCollider;
-    public TriggerDamageHitbox triggerDamageHitbox;
+    public static FireChaos Instance;
     public GameObject fireParticlePrefab;
 
-    void Start()
+    private void Awake()
     {
-        
-        if (center == null) // Ensure the center is set
-            center = transform;
+        Instance = this;
     }
 
-    public IEnumerator ExpandAndContractFire()
+    public override void TriggerChaosEvent()
     {
-        float elapsedTime = 0f;
-        // Expansi√≥n del fuego
-        while (elapsedTime < expansionDuration)
-        {
-            //if (fireInstance == null) yield break;
+        // LÛgica especÌfica del evento de caos del fuego
+        Debug.Log("Evento de Fuego desencadenado");
+        BaseBuilding[] buildings = FindObjectsOfType<BaseBuilding>(); // Seleccionar aleatoriamente un edificio de la escena
+        if (buildings.Length == 0) return;
 
-            elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / expansionDuration;
-            sphereCollider.radius = 2 * Mathf.Lerp(initialRadius, maxRadius, progress); // Expandir el radio del SphereCollider
-            fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius; // Sincronizar el tama√±o del sistema de part√≠culas
-
-            yield return null;
-        }
-
-        // Asegurarse de que el radio final est√© configurado correctamente
-        sphereCollider.radius = 2 * maxRadius;
-        fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius;
-       // Contracci√≥n del fuego
-       elapsedTime = 0f;
-        while (elapsedTime < contractionDuration)
-        {
-            //if (fireInstance == null) yield break;
-
-            elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / contractionDuration;
-            sphereCollider.radius = 2 * Mathf.Lerp(maxRadius, initialRadius, progress); // Contraer el radio del SphereCollider
-            fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius; // Sincronizar el tama√±o del sistema de part√≠culas
-
-            yield return null;
-        }
-
-        // Asegurarse de que el radio final est√© configurado a cero y destruir el objeto de fuego
-        sphereCollider.radius = 0;
-        fireParticlePrefab.transform.localScale = Vector3.zero;
-        Destroy(gameObject);
+        BaseBuilding targetBuilding = buildings[Random.Range(0, buildings.Length)];
+        StartFireAtBuilding(targetBuilding);
     }
 
-
-    private void OnDrawGizmos()
+    private void StartFireAtBuilding(BaseBuilding building)
     {
-        if (center != null)
-            NaturalChaosManager.DrawWireDisc(Color.red, center.position, center.up, maxRadius);
+        // Instanciar el sistema de partÌculas en la posiciÛn del edificio seleccionado
+        var fireInstance = Instantiate(fireParticlePrefab, building.transform.position, Quaternion.identity);
+        fireInstance.transform.SetParent(building.transform);
+
+        // Configurar el componente FireChaos
+        Fire fireChaos = fireInstance.GetComponent<Fire>();
+        fireChaos.triggerDamageHitbox.baseChaos = this;
+
+        // Iniciar la expansiÛn y contracciÛn del fuego
+        StartCoroutine(fireChaos.ExpandAndContractFire());
     }
 }

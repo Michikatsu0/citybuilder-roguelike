@@ -54,16 +54,15 @@ public class MeteorChaos : BaseChaos
     {
         GameObject meteorInstance = Instantiate(meteorPrefab, spawnPoint, Quaternion.identity);
         Meteor meteorScript = meteorInstance.GetComponent<Meteor>();
-
+        TriggerDamageHitbox triggerDamageHitbox = meteorInstance.GetComponent<TriggerDamageHitbox>();
+        triggerDamageHitbox.baseChaos = this;
         if (meteorScript != null)
-        {
             meteorScript.Initialize(spawnPoint, impactPoint, 2f); // Pasar el tiempo de viaje deseado
-        }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (center != null)
-            NaturalChaosManager.DrawWireDisc(Color.red, center.position, center.up, radius);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (center != null)
+    //        NaturalChaosManager.DrawWireDisc(Color.red, center.position, center.up, radius);
+    //}
 }

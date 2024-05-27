@@ -70,8 +70,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 500
-  moneyGeneratedPerMinute: 50000
+  moneyGeneratedPerMinute: 7000
   buildingCost: 15000
+  generatedMoney: 0
+  isGeneratingMoney: 1
   cellBuilding: {fileID: 0}
 --- !u!114 &8235677960273603546
 MonoBehaviour:

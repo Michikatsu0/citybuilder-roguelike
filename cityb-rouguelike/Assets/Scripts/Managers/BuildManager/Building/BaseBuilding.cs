@@ -7,8 +7,8 @@ public class BaseBuilding : MonoBehaviour
     public int moneyGeneratedPerMinute = 1000;
     public int buildingCost = 1000;
 
-    private float generatedMoney = 0;
-    private bool isGeneratingMoney = true;
+    public float generatedMoney = 0;
+    public bool isGeneratingMoney = true;
     private int threshold = 200; // Example threshold for collection
     private float moneyPerSecond;
     public CellBuilding cellBuilding;

@@ -179,10 +179,15 @@ public class CellBuilding : MonoBehaviour
         EnableMeshRenderer(meshRenderers, false);
 
         building = false;
-        bought = false;
+        //bought = false;
         recollect = false;
         doOnce = true;
         currentBuilding = null;
+
+        //currentBuilding.generatedMoney = 0;
+        //currentBuilding.isGeneratingMoney = false; // Reiniciar la generación después de la recolección
+        //currentBuilding.cellBuilding.textsFade[3].text = 0.ToString();
+
         Destroy(buildPosition.gameObject);
     }
 
