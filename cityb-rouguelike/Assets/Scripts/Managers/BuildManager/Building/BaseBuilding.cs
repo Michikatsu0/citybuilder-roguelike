@@ -13,18 +13,19 @@ public class BaseBuilding : MonoBehaviour
     private float moneyPerSecond;
     public CellBuilding cellBuilding;
 
-    private Coroutine generateMoneyCoroutine;
-    private MeshRenderer[] meshRenderer;
+    private Coroutine generateMoneyCoroutine, damageCoroutine;
+    private MeshRenderer[] meshRenderers;
 
     void Start()
     {
-        meshRenderer = GetComponentsInChildren<MeshRenderer>();
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
         moneyPerSecond = moneyGeneratedPerMinute / 60f; // Corrigiendo el cálculo del dinero por segundo
         generateMoneyCoroutine = StartCoroutine(GenerateMoney());
     }
 
     void Update()
     {
+        if (!NaturalChaosManager.Instance.isGameActive) return;
         if (CanCollectMoney())
             cellBuilding.recollect = true;
         else
@@ -73,11 +74,41 @@ public class BaseBuilding : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        healthPoints -= damage;
-        if (healthPoints <= 0)
+        // Cancel the previous damage animation if it's still running
+        if (damageCoroutine != null)
+            StopCoroutine(damageCoroutine);
+
+        // Start the damage animation
+        int targetHealth = Mathf.Max(healthPoints - damage, 0);
+        damageCoroutine = StartCoroutine(AnimateHealthDecrease(healthPoints, targetHealth));
+    }
+
+    private IEnumerator AnimateHealthDecrease(int startHealth, int endHealth)
+    {
+        float duration = 0.5f; // Duration of the animation
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
         {
-            healthPoints = 0;
-            cellBuilding.DestroyBuild(meshRenderer, this);
+            elapsed += Time.deltaTime;
+            float progress = elapsed / duration;
+
+            // Interpolate between startHealth and endHealth
+            int currentHealth = Mathf.RoundToInt(Mathf.Lerp(startHealth, endHealth, progress));
+            cellBuilding.textsFade[1].text = currentHealth.ToString();
+            healthPoints = currentHealth;
+
+            yield return null;
+        }
+
+        // Ensure the final health value is set correctly
+        healthPoints = endHealth;
+        cellBuilding.textsFade[1].text = endHealth.ToString();
+
+        if (endHealth <= 0)
+        {
+            cellBuilding.textsFade[1].text = "0"; // Ensure the text shows 0 if healthPoints is <= 0
+            cellBuilding.DestroyBuild(meshRenderers, this);
         }
     }
 }

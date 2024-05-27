@@ -52,11 +52,15 @@ MonoBehaviour:
   timeDuration: 0.69
   curveValue: 0
   fadeValue: 0
+  delay1: 0.25
+  delay2: 0.1
   building: 0
   bought: 1
   recollect: 0
   doOnce: 1
   priceSlot: 0
+  repetitions1: 3
+  repetitions2: 5
   position: {x: 0, y: 0, z: 0}
   buildProgress: {fileID: 5441240920996623481}
   materials:

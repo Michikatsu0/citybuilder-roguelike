@@ -4,24 +4,13 @@ using UnityEngine;
 
 public class OceanChaos : BaseChaos
 {
-    private Animator animator;
-    
-    void Start()
-    {
-        animator = GetComponent<Animator>();  
-    }
-
-    void Update()
-    {
-                  
-    }
+    public Animator animator;
 
     public override void TriggerChaosEvent()
     {
         Debug.Log("Evento de Océano desencadenado");
-        var tempRandom = Random.Range(0, 1);
+        float tempRandom = Random.Range(0f, 1f);
         animator.SetFloat("RandomAttack", tempRandom);
         animator.SetTrigger("Attack");
-
     }
 }

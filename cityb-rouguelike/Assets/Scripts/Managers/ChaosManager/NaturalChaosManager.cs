@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ChaosManager : MonoBehaviour
+public class NaturalChaosManager : MonoBehaviour
 {
+    public static NaturalChaosManager Instance;
     public TMP_Text timerText; // Asigna el componente TextMeshPro desde el Inspector
     public float timeLimit = 360f; // Límite de tiempo en segundos (6 minutos)
 
-    public float minInterval = 10f; // Intervalo mínimo en segundos
-    public float maxInterval = 30f; // Intervalo máximo en segundos
-    public AnimationCurve intervalCurve; // Curva de animación para la variabilidad del intervalo
-
+    public Vector2 interval;
     private float remainingTime;
-    private bool isGameActive = true; // Estado del juego
+    public bool isGameActive = true; // Estado del juego
     private bool paused = false; // Bandera para pausar el juego
 
-    private List<BaseChaos> chaosEvents;
+    public List<BaseChaos> chaosEvents = new List<BaseChaos>();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         remainingTime = timeLimit;
         StartCoroutine(StartCountdown());
         StartCoroutine(GenerateChaosEvents()); // Iniciar generación de eventos de caos
-
-        // Inicializar referencias a los componentes de caos
-        chaosEvents = new List<BaseChaos>(GetComponentsInChildren<BaseChaos>());
 
         Debug.Log("Chaos Manager started. Countdown and chaos events coroutines started.");
     }
@@ -82,12 +82,7 @@ public class ChaosManager : MonoBehaviour
     {
         while (isGameActive)
         {
-            // Calcular un intervalo aleatorio utilizando una curva de animación para variabilidad
-            float t = Random.value;
-            float curveValue = intervalCurve.Evaluate(t);
-            float randomInterval = minInterval + curveValue * (maxInterval - minInterval);
-            Debug.Log("Waiting for " + randomInterval + " seconds before triggering next chaos event.");
-            yield return new WaitForSeconds(randomInterval);
+            yield return new WaitForSeconds(Random.Range(interval.x,interval.y));
 
             // Elegir un evento de caos aleatorio
             int chaosEventIndex = Random.Range(0, chaosEvents.Count);
@@ -95,8 +90,19 @@ public class ChaosManager : MonoBehaviour
             chaosEvents[chaosEventIndex].TriggerChaosEvent();
             //check life
 
-
+            // Verificar si todas las CellBuildings están destruidas
+            if (CellBuildingsManager.Instance.AreAllBuildingsDestroyed())
+            {
+                GameOver();
+                break;
+            }
         }
+    }
+
+    public static void DrawWireDisc(Color color, Vector3 center, Vector3 normal, float radius)
+    {
+        UnityEditor.Handles.color = color;
+        UnityEditor.Handles.DrawWireDisc(center, normal, radius);
     }
 }
 

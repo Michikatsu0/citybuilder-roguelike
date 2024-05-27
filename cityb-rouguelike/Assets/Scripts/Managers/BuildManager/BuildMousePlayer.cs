@@ -21,6 +21,7 @@ public class BuildMousePlayer : MonoBehaviour
 
     private void Update()
     {
+        if (!NaturalChaosManager.Instance.isGameActive) return;
         if (GetRay(out hit))
         {
             mousePosition.transform.position = hit.point;

@@ -37,6 +37,7 @@ public class CellBuildingsManager : MonoBehaviour
 
     private void Update()
     {
+        if (!NaturalChaosManager.Instance.isGameActive) return;
         FadeAnimationValue();
     }
 
@@ -57,7 +58,7 @@ public class CellBuildingsManager : MonoBehaviour
     {
         foreach (var cell in cells)
         {
-            if (cell.currentBuilding.healthPoints > 0)
+            if (cell.currentBuilding != null && cell.currentBuilding.healthPoints > 0)
                 return false;
         }
         return true;

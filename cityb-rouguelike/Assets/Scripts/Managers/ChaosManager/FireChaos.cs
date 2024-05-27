@@ -2,23 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireChaos : BaseChaos
+public class FireChaos : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Transform center;
+
+    public float initialRadius = 0f;
+    public float maxRadius = 5f;
+    public float expansionDuration = 5f; // Duration in seconds for the fire to reach max radius
+    public float contractionDuration = 5f; // Duration in seconds for the fire to shrink to zero
+
+    public SphereCollider sphereCollider;
+    public TriggerDamageHitbox triggerDamageHitbox;
+    public GameObject fireParticlePrefab;
+
     void Start()
     {
         
+        if (center == null) // Ensure the center is set
+            center = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator ExpandAndContractFire()
     {
-        
+        float elapsedTime = 0f;
+        // Expansi√≥n del fuego
+        while (elapsedTime < expansionDuration)
+        {
+            //if (fireInstance == null) yield break;
+
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / expansionDuration;
+            sphereCollider.radius = 2 * Mathf.Lerp(initialRadius, maxRadius, progress); // Expandir el radio del SphereCollider
+            fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius; // Sincronizar el tama√±o del sistema de part√≠culas
+
+            yield return null;
+        }
+
+        // Asegurarse de que el radio final est√© configurado correctamente
+        sphereCollider.radius = 2 * maxRadius;
+        fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius;
+       // Contracci√≥n del fuego
+       elapsedTime = 0f;
+        while (elapsedTime < contractionDuration)
+        {
+            //if (fireInstance == null) yield break;
+
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / contractionDuration;
+            sphereCollider.radius = 2 * Mathf.Lerp(maxRadius, initialRadius, progress); // Contraer el radio del SphereCollider
+            fireParticlePrefab.transform.localScale = Vector3.one * sphereCollider.radius; // Sincronizar el tama√±o del sistema de part√≠culas
+
+            yield return null;
+        }
+
+        // Asegurarse de que el radio final est√© configurado a cero y destruir el objeto de fuego
+        sphereCollider.radius = 0;
+        fireParticlePrefab.transform.localScale = Vector3.zero;
+        Destroy(gameObject);
     }
-    public override void TriggerChaosEvent()
+
+
+    private void OnDrawGizmos()
     {
-        // LÛgica especÌfica del evento de caos del hurac·n
-        Debug.Log("Evento de Fuego desencadenado");
-        // Implementar la lÛgica especÌfica del caos del hurac·n
+        if (center != null)
+            NaturalChaosManager.DrawWireDisc(Color.red, center.position, center.up, maxRadius);
     }
 }

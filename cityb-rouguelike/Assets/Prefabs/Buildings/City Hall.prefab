@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59051712252398a459bfb419da0efc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
-  moneyGeneratedPerMinute: 100000
-  buildingCost: 150000
+  healthPoints: 1000
+  moneyGeneratedPerMinute: 10000
+  buildingCost: 15000
   cellBuilding: {fileID: 0}
 --- !u!54 &1022114426711757700
 Rigidbody:

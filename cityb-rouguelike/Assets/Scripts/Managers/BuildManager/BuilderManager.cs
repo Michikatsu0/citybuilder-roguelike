@@ -22,6 +22,7 @@ public class BuilderManager : MonoBehaviour
 
     void Update()
     {
+        if (!NaturalChaosManager.Instance.isGameActive) return;
         if (!selectionBuild) return;
 
         CalculateGizmo();

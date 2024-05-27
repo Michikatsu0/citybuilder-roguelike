@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class CellBuilding : MonoBehaviour
 {
     public ParticleSystem effect;
-    public float timeDuration, curveValue, fadeValue;
+    public float timeDuration, curveValue, fadeValue, delay1, delay2;
     public bool building = false, bought = false, recollect = false, doOnce = true;
-    public int priceSlot = 2000;
+    public int priceSlot = 2000, repetitions1 = 5, repetitions2 = 10;
     public Vector3 position;
     public Slider buildProgress;
     public Material[] materials;
@@ -48,6 +48,7 @@ public class CellBuilding : MonoBehaviour
 
     void Update()
     {
+        if (!NaturalChaosManager.Instance.isGameActive) return;
         FadeUIManager();
     }
 
@@ -156,28 +157,37 @@ public class CellBuilding : MonoBehaviour
         StartCoroutine(DestroyEffect(meshRenderer, buildPosition));
     }
 
-    private IEnumerator DestroyEffect(MeshRenderer[] meshRenderer, BaseBuilding buildPosition)
+    private IEnumerator DestroyEffect(MeshRenderer[] meshRenderers, BaseBuilding buildPosition)
     {
-        bought = false;
         // Effect
-        EnableMeshRederer(meshRenderer, false);
-        yield return new WaitForSeconds(1f);
-        EnableMeshRederer(meshRenderer, true);
-        yield return new WaitForSeconds(1f);
-        EnableMeshRederer(meshRenderer, false);
-        yield return new WaitForSeconds(1f);
-        EnableMeshRederer(meshRenderer, true);
-        yield return new WaitForSeconds(0.5f);
-        EnableMeshRederer(meshRenderer, false);
-        yield return new WaitForSeconds(0.5f);
-        EnableMeshRederer(meshRenderer, true);
-        yield return new WaitForSeconds(0.5f);
-        EnableMeshRederer(meshRenderer, false);
+        for (int i = 0; i < repetitions1; i++)
+        {
+            EnableMeshRenderer(meshRenderers, false);
+            yield return new WaitForSeconds(delay1);
+            EnableMeshRenderer(meshRenderers, true);
+            yield return new WaitForSeconds(delay1);
+        }
+
+        for (int i = 0; i < repetitions2; i++)
+        {
+            EnableMeshRenderer(meshRenderers, false);
+            yield return new WaitForSeconds(delay2);
+            EnableMeshRenderer(meshRenderers, true);
+            yield return new WaitForSeconds(delay2);
+        }
+
+        EnableMeshRenderer(meshRenderers, false);
+
+        building = false;
+        bought = false;
+        recollect = false;
+        doOnce = true;
+        currentBuilding = null;
         Destroy(buildPosition.gameObject);
     }
 
 
-    private void EnableMeshRederer(MeshRenderer[] meshRenderer, bool enable)
+    private void EnableMeshRenderer(MeshRenderer[] meshRenderer, bool enable)
     {
         foreach (var mr in meshRenderer)
             mr.enabled = enable;
